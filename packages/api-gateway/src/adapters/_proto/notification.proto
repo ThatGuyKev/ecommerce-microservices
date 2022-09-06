@@ -1,0 +1,29 @@
+syntax = "proto3";
+package notification;
+
+service NotificationService {
+  rpc SendNotification(SendNotificationReq) returns (SendNotificationRes) {}
+  rpc CreateNotification(CreateNotificationReq)
+      returns (CreateNotificationRes) {}
+  rpc GetNotificationById(GetNotificationByIdReq)
+      returns (GetNotificationByIdRes) {}
+  rpc UpdateNotification(UpdatenotificationReq)
+      returns (UpdatenotificationRes) {}
+  rpc DeleteNotification(DeleteNotificationReq)
+      returns (DeleteNotificationRes) {}
+}
+
+message SendNotificationReq {}
+message SendNotificationRes {}
+
+message CreateNotificationReq {}
+message CreateNotificationRes {}
+
+message GetNotificationByIdReq {}
+message GetNotificationByIdRes {}
+
+message UpdatenotificationReq {}
+message UpdatenotificationRes {}
+
+message DeleteNotificationReq {}
+message DeleteNotificationRes {}

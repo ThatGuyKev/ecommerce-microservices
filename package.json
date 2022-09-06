@@ -1,0 +1,29 @@
+{
+    "name": "@ecommerce",
+    "version": "0.0.1",
+    "description": "ecommerce monorepo",
+    "author": "Ahmed Abdalla <ahmed_aallah@hotmail.com>",
+    "packageManager": "yarn@3.2.0",
+    "license": "None",
+    "scripts": {
+        "proto": "./scripts/proto-install.sh _proto packages/api-gateway/src/adapters/_proto"
+    },
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ]
+    },
+    "devDependencies": {
+        "@grpc/proto-loader": "^0.7.2",
+        "eslint": "^8.22.0",
+        "grpc-tools": "^1.11.2",
+        "husky": "^8.0.1",
+        "lint-staged": "^13.0.3",
+        "prettier": "^2.7.1"
+    },
+    "lint-staged": {
+        "packages/services/**/*.go": [
+            "golangci-lint run"
+        ]
+    }
+}

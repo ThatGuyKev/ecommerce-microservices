@@ -1,0 +1,11 @@
+services:
+  db-products:
+      container_name: db-products
+      environment:
+        POSTGRES_DB: db
+        PGUSER: postgres
+        POSTGRES_PASSWORD: password
+      image: postgres
+    
+      ports:
+        - 9102:5432

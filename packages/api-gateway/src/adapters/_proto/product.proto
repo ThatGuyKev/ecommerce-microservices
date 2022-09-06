@@ -1,0 +1,466 @@
+syntax = "proto3";
+package product;
+
+message Context {
+  string localeId = 1;
+  string region = 2;
+}
+
+message ProductDetails {
+  repeated Asset assets = 1;
+  repeated IncludedProductDetail includedProducts = 2;
+  string options = 3; // TODO: create option message
+  repeated CategoryRef parentCategories = 4;
+  PriceInfo priceInfo = 5;
+  map<string, PromotionalProductSummary> promotionalProducts = 6;
+  repeated VariantDetail variants = 7;
+  string venderRef = 8;
+}
+
+message PromotionalProductSummary {
+  repeated ProductDetails relatedProducts = 1;
+}
+
+message Asset {
+
+  AssetType type = 1;
+  string altText = 2;
+  string title = 3;
+  string contentUrl = 4;
+  repeated string tags = 5;
+}
+
+message IncludedProductDetail {
+  ProductDetails product = 1;
+  VariantDetail variant = 2;
+  PriceInfo priceInfo = 3;
+}
+message CategoryRef {
+  string id = 1;
+  string name = 2;
+  string url = 3;
+}
+
+message VariantDetail { PriceInfo priceInfo = 1; }
+
+message PriceInfo {
+  string price = 1;
+  string priceType = 2;
+  map<string, PriceTypeDetail> priceTypeDetails = 3;
+}
+
+message PriceTypeDetail {
+  string bestPrice = 1;
+  string priceType = 2;
+}
+
+message ProductSummary {
+  repeated Asset assets = 1;
+  string itemChoice = 2;
+  PriceInfo priceInfo = 3;
+  repeated VariantDetail variants = 4;
+}
+
+message CategoryDetails {
+  repeated Asset assets = 1;
+  repeated ProductSummary products = 2;
+  map<string, PromotionalProducts> promotionalProducts = 3;
+}
+
+message PromotionalProducts {
+  repeated PromotionalCategoryProductSummary promotionalProducts = 1;
+}
+
+message PromotionalCategoryProductSummary {
+  ProductSummary promotionalProduct = 1;
+  PromotionalProductType type = 2;
+}
+
+message NewCategory {
+  string name = 1;
+  string url = 2;
+  string externalId = 3;
+  string description = 4;
+  string textCode = 5;
+  string activeStartDate = 6;
+  string activeEndDate = 7;
+  string displayTemplate = 8;
+  string metaTitle = 9;
+  string metaDescription = 10;
+  string productMembershipType = 11; // TODO: create enum for this
+  string productMembershipRule = 12;
+  string productMembershipLocale = 13;
+  bool showInSiteMap = 14;
+  map<string, Attribute> attributes = 15;
+  CategoryRef parentCategory = 16;
+}
+
+message NewProduct {
+  string name = 1;
+  string uri = 2;
+  string description = 3;
+  string sku = 4;
+  string currency = 5; // TODO: create enum for this
+  Price defaultPrice = 6;
+  Price salePrice = 7;
+  Price cost = 8;
+  string metaTitle = 9;
+  string metaDescription = 10;
+  string displayTemplate = 11;
+  bool availableOnline = 12;
+  bool searchable = 13;
+  bool individuallySold = 14;
+  bool merchandisingProduct = 15;
+  string keywords = 16;
+  string activeStartDate = 17;
+  string activeEndDate = 18;
+  bool discountable = 19;
+  string inventoryType = 20;             // TODO: create enum for this
+  string inventoryAvailabilityType = 21; // TODO: create enum for this
+  bool eligibleForPickup = 22;
+  map<string, Attribute> fulfillmentFlatRates = 23;
+  // TODO: create different type
+  map<string, Attribute> attributes = 24;
+  string externalId = 25;
+  repeated IncludedProduct includedProducts = 26;
+  repeated Option options = 27;
+  string primaryCategoryId = 28;
+  string brandId = 29;
+  int32 pricingKey = 30;
+  string mergingType = 31; // TODO: create enum for this
+  string productType = 32;
+  string tags = 33;
+}
+message IncludedProduct {
+  string id = 1;
+  int32 pricingKey = 2;
+  string type = 3; // TODO: create enum for this
+  string label = 4;
+  int32 displayOrder = 5;
+  string pricingModel = 6; // TODO: create enum for this
+  bool discountAllowed = 7;
+  int32 quantity = 8;
+  string variantParentProductId = 9;
+  Asset asset = 10;
+  string productId = 11;
+  string variantId = 12;
+}
+
+message Option {
+  string id = 1;
+  string label = 2;
+  string type = 3; // TODO: create enum for this
+  int32 displayOrder = 4;
+  AttributeChoice attributeChoice = 5;
+  string templateContextId = 6;
+  ItemChoice itemChoice = 7;
+}
+
+message ItemChoice {
+  string targetType = 1;    // TODO: create enum for this
+  string selectionType = 2; // TODO: create enum for this
+  string choiceKey = 3;
+  int32 maximumQuantity = 4;
+  int32 minimumQuantity = 5;
+  string pricingModel = 6;
+  bool discountAllowed = 7;
+  string pricingKey = 8;
+  CategoryRef category = 9;
+  string defaultProductId = 10;
+  string defaultVariantId = 11;
+  repeated SpecificChoice specificChoices = 12;
+}
+
+message SpecificChoice {
+  string type = 1; // TODO: create enum for this
+  string nameOverride = 2;
+  string pricingModel = 3;
+  bool discountAllowed = 4;
+  string pricingKey = 5;
+  string variantParentProductId = 6;
+  Asset asset = 7;
+  string productId = 8;
+  string variantId = 9;
+}
+
+message AttributeChoice {
+  string attributeName = 1;
+  string type = 2; // TODO: create enum for this
+  bool required = 3;
+  string validationStrategy = 4; // TODO: create enum for this
+  string validationType = 5;     // TODO create enum for this "REGEX"
+  string validationRule = 6;     // should only be REGEX
+  repeated AllowedValue allowedValues = 7;
+}
+
+message AllowedValue {
+  string id = 1;
+  string label = 2;
+  string value = 3;
+  int32 displayOrder = 4;
+}
+
+message Price {
+  int32 amount = 1;
+  string currency = 2;
+}
+
+message Attribute { string value = 1; }
+enum AssetType {
+  IMAGE = 0;
+  VIDEO = 1;
+  EMBED = 2;
+  PDF = 3;
+  WORD = 4;
+  AUDIO = 5;
+  CSV = 6;
+  EXCEL = 7;
+  TEXT = 8;
+  UNKNOWN = 9;
+}
+
+enum PromotionalProductType {
+  FEATURED = 0;
+  CROSS_SALE = 1;
+  UP_SALE = 2;
+}
+
+service ProductService {
+  // Product
+  rpc CreateProduct(CreateProductReq) returns (CreateProductRes) {}
+  rpc GetProductsByIds(GetProductsByIdsReq) returns (GetProductsByIdsRes) {}
+  rpc GetProductDetails(GetProductDetailsReq) returns (GetProductDetailsRes) {}
+  // Assets
+  rpc GetProductAssetsByProductId(GetProductAssetsByProductIdReq)
+      returns (GetProductAssetsByProductIdRes) {}
+  rpc CreateProductAsset(CreateProductAssetReq)
+      returns (CreateProductAssetRes) {}
+  rpc GetProductAssetById(GetProductAssetByIdReq)
+      returns (GetProductAssetByIdRes) {}
+  rpc UpdateProductAsset(UpdateProductAssetReq)
+      returns (UpdateProductAssetRes) {}
+  rpc DeleteProductAsset(DeleteProductAssetReq)
+      returns (DeleteProductAssetRes) {}
+  // Variants
+  rpc GetProductVariants(GetProductVariantsReq)
+      returns (GetProductVariantsRes) {}
+  rpc CreateProductVariant(CreateProductVariantReq)
+      returns (CreateProductVariantRes) {}
+  rpc UpdateProductVariant(UpdateProductVariantReq)
+      returns (UpdateProductVariantRes) {}
+  rpc DeleteProductVariant(DeleteProductVariantReq)
+      returns (DeleteProductVariantRes) {}
+  // Category
+  rpc CreateCategory(CreateCategoryReq) returns (CreateCategoryRes) {}
+  rpc GetCategoryDetails(GetCategoryDetailsReq)
+      returns (GetCategoryDetailsRes) {}
+  rpc GetCategoriesByIds(GetCategoriesByIdsReq)
+      returns (GetCategoriesByIdsRes) {}
+  rpc GetProductCategories(GetProductCategoriesReq)
+      returns (GetProductCategoriesRes) {}
+  // OptionTemplates
+  rpc GetOptionTemplates(GetOptionTemplatesReq)
+      returns (GetOptionTemplatesRes) {}
+  rpc CreateOptionTemplate(CreateOptionTemplateReq)
+      returns (CreateOptionTemplateRes) {}
+  rpc GetOptionTemplateById(GetOptionTemplateByIdReq)
+      returns (GetOptionTemplateByIdRes) {}
+  rpc DeleteOptionTemplate(DeleteOptionTemplateReq)
+      returns (DeleteOptionTemplateRes) {}
+  rpc UpdateOptionTemplate(UpdateOptionTemplateReq)
+      returns (UpdateOptionTemplateRes) {}
+  rpc GenerateOptionsFromTemplate(GenerateOptionsFromTemplateReq)
+      returns (GenerateOptionsFromTemplateRes) {}
+}
+
+message CreateProductReq { NewProduct product = 1; }
+message CreateProductRes {
+  string code = 1;
+  string message = 2;
+  NewProduct newProduct = 3;
+}
+
+message GetProductDetailsReq {
+  string productId = 1;
+  Context ctx = 2;
+}
+message GetProductDetailsRes {
+  string code = 1;
+  string message = 2;
+  ProductDetails productDetails = 3;
+}
+
+message GetProductsByIdsReq { repeated string productIds = 1; }
+message GetProductsByIdsRes {
+  string code = 1;
+  string message = 2;
+  repeated ProductDetails products = 3;
+}
+
+message UpdateProductAssetReq {
+  string productId = 1;
+  string assetId = 2;
+  Asset asset = 3;
+}
+message UpdateProductAssetRes {
+  string code = 1;
+  string message = 2;
+  Asset asset = 3;
+}
+
+message DeleteProductAssetReq {
+  string productId = 1;
+  string assetId = 2;
+}
+message DeleteProductAssetRes {
+  string code = 1;
+  string message = 2;
+  string status = 3;
+}
+
+message GetProductAssetsByProductIdReq { string productId = 1; }
+message GetProductAssetsByProductIdRes {
+  string code = 1;
+  string message = 2;
+  repeated Asset assets = 3;
+}
+
+message GetProductAssetByIdReq {
+  string productId = 1;
+  string assetId = 2;
+}
+message GetProductAssetByIdRes {
+  string code = 1;
+  string messgae = 2;
+  Asset asset = 3;
+}
+
+message CreateProductAssetReq { Asset asset = 1; }
+message CreateProductAssetRes {
+  string code = 1;
+  string message = 2;
+  Asset asset = 3;
+}
+
+// TODO: research more about variants
+message GetProductVariantsReq { string productId = 1; }
+message GetProductVariantsRes {
+  string code = 1;
+  string message = 2;
+  repeated ProductDetails variants = 3;
+}
+
+message CreateProductVariantReq {
+  string productId = 1;
+  NewProduct variant = 2;
+}
+message CreateProductVariantRes {
+  string code = 1;
+  string message = 2;
+  ProductDetails variant = 3;
+}
+
+message UpdateProductVariantReq {
+  string productId = 1;
+  string variantId = 2;
+  NewProduct updatedVariant = 3;
+}
+message UpdateProductVariantRes {
+  string code = 1;
+  string message = 2;
+  ProductDetails updatedVarinat = 3;
+}
+
+message DeleteProductVariantReq {
+  string proudctId = 1;
+  string variantId = 2;
+}
+message DeleteProductVariantRes {
+  string code = 1;
+  string message = 2;
+  string status = 3;
+}
+
+message CreateCategoryReq { NewCategory category = 1; }
+message CreateCategoryRes {
+  string code = 1;
+  string message = 2;
+  CategoryDetails category = 3;
+}
+
+message GetCategoryDetailsReq {
+  string categoryId = 1;
+  Context ctx = 2;
+}
+message GetCategoryDetailsRes {
+  string code = 1;
+  string message = 2;
+  CategoryDetails categroyDetails = 3;
+}
+
+message GetCategoriesByIdsReq { repeated string categoriesIds = 1; }
+message GetCategoriesByIdsRes {
+  string code = 1;
+  string message = 2;
+  repeated CategoryDetails categories = 3;
+}
+
+message GetProductCategoriesReq { string productId = 1; }
+message GetProductCategoriesRes {
+  string code = 1;
+  string message = 2;
+  repeated CategoryDetails categories = 3;
+}
+
+message GetOptionTemplatesReq {}
+message GetOptionTemplatesRes {
+  string code = 1;
+  string message = 2;
+  repeated Option option = 3;
+}
+
+message GetOptionTemplateByIdReq { string templateId = 1; }
+message GetOptionTemplateByIdRes {
+  string code = 1;
+  string message = 2;
+  Option optionTemplate = 3;
+}
+
+message CreateOptionTemplateReq {
+  string name = 1;
+  Option optionTemplate = 2;
+}
+message CreateOptionTemplateRes {
+  string code = 1;
+  string message = 2;
+  Option optionTemplate = 3;
+}
+
+message DeleteOptionTemplateReq { string templateId = 1; }
+message DeleteOptionTemplateRes {
+  string code = 1;
+  string message = 2;
+  string status = 3;
+}
+
+message UpdateOptionTemplateReq {
+  string templateId = 1;
+  Option updatedTemplate = 2;
+}
+message UpdateOptionTemplateRes {
+  string code = 1;
+  string message = 2;
+  Option updatedTemplate = 3;
+}
+
+message GenerateOptionsFromTemplateReq {
+  string productId = 1;
+  string generationType = 2; // TODO: create enum for this
+  string templateId = 3;
+  string templateGroupId = 4;
+}
+message GenerateOptionsFromTemplateRes {
+  string code = 1;
+  string message = 2;
+  NewProduct updatedProduct = 3;
+}

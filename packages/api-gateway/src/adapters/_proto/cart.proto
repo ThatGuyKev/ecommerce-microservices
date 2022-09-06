@@ -1,0 +1,230 @@
+syntax = "proto3";
+package cart;
+
+import "google/protobuf/any.proto";
+
+service CartService {
+
+  rpc CreateCart(CreateCartReq) returns (CreateCartRes) {}
+  rpc AddItemToCart(AddItemToCartReq) returns (AddItemToCartRes) {}
+  rpc AddBulkToCart(AddBulkToCartReq) returns (AddBulkToCartRes) {}
+  rpc GetCartItemsByCartId(GetCartItemsByCartIdReq)
+      returns (GetCartItemsByCartIdRes) {}
+  rpc GetCartItemById(GetCartItemByIdReq) returns (GetCartItemByIdRes) {}
+  rpc UpdateCartItem(UpdateCartItemReq) returns (UpdateCartItemRes) {}
+  rpc DeleteCartItem(DeleteCartItemReq) returns (DeleteCartItemRes) {}
+  rpc GetCartById(GetCartByIdReq) returns (GetCartByIdRes) {}
+
+  rpc UpdateCart(UpdateCartReq) returns (UpdateCartRes) {}
+  rpc DeleteCart(DeleteCartReq) returns (DeleteCartRes) {}
+  rpc PriceCart(PriceCartReq) returns (PriceCartRes) {}
+  rpc ProcessCart(ProcessCartReq) returns (ProcessCartRes) {}
+
+  rpc GetCustomerCart(GetCustomersCartReq) returns (GetCustomersCartRes) {}
+
+  // TODO: anonymous cart and connect offer service
+  rpc CreateGuestToken(CreateGuestTokenReq) returns (CreateGuestTokenRes) {}
+  rpc GetGuestToken(GetGuestTokenReq) returns (GetGuestTokenRes) {}
+  rpc DeleteGuestToken(DeleteGuestTokenReq) returns (DeleteGuestTokenRes) {}
+  rpc ValidateGuestToken(ValidateGuestTokenReq)
+      returns (ValidateGuestTokenRes) {}
+  rpc AddOfferCode(AddOfferCodeReq) returns (AddOfferCodeRes) {}
+}
+
+message CartItem {
+  string variantId = 1;
+  string productId = 2;
+  string sku = 3;
+  uint32 quantity = 4;
+  map<string, google.protobuf.Any> itemAttributes = 5;
+  string itemChoiceKey = 6;
+}
+
+message CustomrerRef {
+  string customerId = 1;
+  string username = 2;
+  bool isRegistered = 3;
+}
+message Price {
+  float amount = 1;
+  string currency = 2;
+}
+
+message CartPricing {
+  string currency = 1;
+  Price totalTax = 2;
+  Price fulfillmentTotal = 3;
+  Price subtotal = 4;
+}
+
+message Cart {
+  string id = 1;
+  string name = 2;
+  string status = 3;
+  CustomrerRef customerRef = 4;
+  string emailAddress = 5;
+  string orderNumber = 6;
+  string createDate = 7;
+  string submitDate = 8;
+  string locale = 9;
+  CartPricing cartPricing = 10;
+  repeated CartItem cartItems = 11;
+}
+message Context {
+  int32 customerId = 1;
+  string locale = 2;
+}
+
+message PriceRequest {
+  string locale = 1;
+  string currency = 2;
+}
+
+message CreateCartReq {
+  Context ctx = 1;
+  CartItem addItemRequest = 2;
+  PriceRequest priceCartRequest = 3;
+}
+message CreateCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+message AddItemToCartReq {
+  string cartId = 1;
+  Context ctx = 2;
+  CartItem cartItem = 3;
+}
+message AddItemToCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+message AddBulkToCartReq {
+  string cartId = 1;
+  Context ctx = 2;
+  repeated CartItem cartItems = 3;
+}
+message AddBulkToCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+message GetCartItemsByCartIdReq {
+  Context ctx = 1;
+  string cartId = 2;
+}
+message GetCartItemsByCartIdRes {
+  string code = 1;
+  string message = 2;
+  repeated CartItem cartItems = 3;
+}
+
+message GetCartItemByIdReq {
+  Context ctx = 1;
+  string cartId = 2;
+  string cartItemId = 3;
+}
+message GetCartItemByIdRes {
+  string code = 1;
+  string message = 2;
+  CartItem cartItem = 3;
+}
+
+message UpdateCartItemReq {
+  Context ctx = 1;
+  string cartId = 2;
+  string cartItemId = 3;
+  CartItem cartItemPart = 4;
+}
+message UpdateCartItemRes {
+  string code = 1;
+  string message = 2;
+  CartItem cartItem = 3;
+}
+
+message DeleteCartItemReq {
+  Context ctx = 1;
+  string cartId = 2;
+  string cartItemId = 3;
+}
+message DeleteCartItemRes {
+  string code = 1;
+  string message = 2;
+  CartItem deletedItem = 3;
+}
+
+message GetCartByIdReq {
+  Context ctx = 1;
+  string cartId = 2;
+}
+message GetCartByIdRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+message GetCustomersCartReq {}
+message GetCustomersCartRes {}
+
+message UpdateCartReq {
+  Context ctx = 1;
+  string cartId = 2;
+  Cart cartpart = 3;
+}
+message UpdateCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+message DeleteCartReq {
+  Context ctx = 1;
+  string cartId = 2;
+}
+message DeleteCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+message PriceCartReq {
+  Context ctx = 1;
+  string cartId = 2;
+  PriceRequest price = 3;
+}
+message PriceCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+
+// TODO: anonymous cart
+message CreateGuestTokenReq {}
+message CreateGuestTokenRes {}
+
+message GetGuestTokenReq {}
+message GetGuestTokenRes {}
+
+message DeleteGuestTokenReq {}
+message DeleteGuestTokenRes {}
+
+message ValidateGuestTokenReq {}
+message ValidateGuestTokenRes {}
+
+message ProcessCartReq {
+  Context ctx = 1;
+  string cartId = 2;
+  Cart cart = 3;
+}
+message ProcessCartRes {
+  string code = 1;
+  string message = 2;
+  Cart cart = 3;
+}
+// TODO: connect to offer model
+message AddOfferCodeReq {}
+message AddOfferCodeRes {}

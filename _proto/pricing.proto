@@ -1,0 +1,49 @@
+syntax = "proto3";
+package pricing;
+
+option go_package = "./pricing/pb";
+service PricingService {
+  rpc GetPriceInfo(GetPriceInfoReq) returns (GetPriceInfoRes) {}
+  rpc GetPricesLists(GetPricesListsReq) returns (GetPricesListsRes) {}
+  rpc CreatePriceList(CreatePriceListReq) returns (CreatePriceListRes) {}
+  rpc GetPricesById(GetPricesByIdReq) returns (GetPricesByIdRes) {}
+  rpc DeletePriceList(DeletePriceListReq) returns (DeletePriceListRes) {}
+  rpc UpdatePriceList(UpdatePriceListReq) returns (UpdatePriceListRes) {}
+  rpc CreatePriceDataById(CreatePriceDataByIdReq)
+      returns (CreatePriceDataByIdRes) {}
+  rpc DeletePriceDataById(DeletePriceDataByIdReq)
+      returns (DeletePriceDataByIdRes) {}
+  rpc UpdatePriceDataById(UpdatePriceDataByIdReq)
+      returns (UpdatePriceDataByIdRes) {}
+  rpc GetPriceDataById(GetPriceDataByIdReq) returns (GetPriceDataByIdRes) {}
+}
+
+message GetPriceInfoReq {}
+message GetPriceInfoRes {}
+
+message GetPricesListsReq {}
+message GetPricesListsRes {}
+
+message CreatePriceListReq {}
+message CreatePriceListRes {}
+
+message GetPricesByIdReq {}
+message GetPricesByIdRes {}
+
+message GetPriceDataByIdReq {}
+message GetPriceDataByIdRes {}
+
+message UpdatePriceDataByIdReq {}
+message UpdatePriceDataByIdRes {}
+
+message DeletePriceDataByIdReq {}
+message DeletePriceDataByIdRes {}
+
+message CreatePriceDataByIdReq {}
+message CreatePriceDataByIdRes {}
+
+message UpdatePriceListReq {}
+message UpdatePriceListRes {}
+
+message DeletePriceListReq {}
+message DeletePriceListRes {}

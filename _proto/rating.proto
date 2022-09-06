@@ -1,0 +1,11 @@
+syntax = "proto3";
+package rating;
+
+option go_package = "./rating/pb";
+service RatingService {
+  rpc GetRatingsAdmin(GetRatingsAdminReq) returns (GetRatingsAdminRes) {}
+}
+
+message GetRatingsAdminReq {}
+
+message GetRatingsAdminRes {}

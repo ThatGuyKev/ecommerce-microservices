@@ -1,0 +1,5 @@
+syntax = "proto3";
+package offer;
+
+option go_package = "./offer/pb";
+service OfferService {}

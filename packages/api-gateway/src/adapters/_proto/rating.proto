@@ -1,0 +1,10 @@
+syntax = "proto3";
+package rating;
+
+service RatingService {
+  rpc GetRatingsAdmin(GetRatingsAdminReq) returns (GetRatingsAdminRes) {}
+}
+
+message GetRatingsAdminReq {}
+
+message GetRatingsAdminRes {}

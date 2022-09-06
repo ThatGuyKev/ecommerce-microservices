@@ -1,0 +1,5 @@
+syntax = "proto3";
+package shipping;
+
+option go_package = "./shipping/pb";
+service ShippingService {}

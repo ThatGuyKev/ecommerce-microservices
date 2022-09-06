@@ -1,0 +1,44 @@
+syntax = "proto3";
+package order;
+
+option go_package = "./order/pb";
+service OrderService {
+  rpc CreateOrder(CreateOrderReq) returns (CreateOrderRes) {}
+  rpc GetOrders(GetOrdersReq) returns (GetOrdersRes) {}
+  rpc GetOrderById(GetOrderByIdReq) returns (GetOrderByIdRes) {}
+  rpc GetOrderByOrderNum(GetOrderByOrderNumReq)
+      returns (GetOrderByOrderNumRes) {}
+  rpc UpdateOrder(UpdateOrderReq) returns (UpdateOrderRes) {}
+  rpc DeleteOrder(DeleteOrderReq) returns (DeleteOrderRes) {}
+  rpc GetOrdersByCartId(GetOrdersByCartIdReq) returns (GetOrdersByCartIdRes) {};
+
+  rpc GetOrderHistory(GetOrderByIdReq) returns (GetOrderByIdRes) {}
+  rpc ChangeOrderStatus(ChangeOrderStatusReq) returns (ChangeOrderStatusRes) {}
+}
+
+message GetOrdersReq {}
+message GetOrdersRes {}
+
+message CreateOrderReq {}
+message CreateOrderRes {}
+
+message GetOrderByIdReq {}
+message GetOrderByIdRes {}
+
+message GetOrderByOrderNumReq {}
+message GetOrderByOrderNumRes {}
+
+message UpdateOrderReq {}
+message UpdateOrderRes {}
+
+message DeleteOrderReq {}
+message DeleteOrderRes {}
+
+message GetOrdersByCartIdReq {}
+message GetOrdersByCartIdRes {}
+
+message GetOrderHistoryReq {}
+message GetOrderHistoryRes {}
+
+message ChangeOrderStatusReq {}
+message ChangeOrderStatusRes {}

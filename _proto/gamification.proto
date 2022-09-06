@@ -1,0 +1,5 @@
+syntax = "proto3";
+package gamification;
+
+option go_package = "./gamification/pb";
+service GamificationService {}

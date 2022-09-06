@@ -1,0 +1,10 @@
+syntax = "proto3";
+package payment;
+
+option go_package = "./payment/pb";
+service PaymentService {
+  rpc InitPayment(InitPaymentReq) returns (InitPaymentRes) {}
+}
+message InitPaymentReq {}
+
+message InitPaymentRes {}
