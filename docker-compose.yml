@@ -1,4 +1,32 @@
 services:
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: "./packages/api-gateway"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - svc-products
+    ports: 
+      - 9000:9000
+    volumes: 
+      - ./packages/api-gateway:/opt/ecommerce/api-gateway
+
+  svc-products:
+    container_name: svc-products
+    build:
+      context: "./packages/services/product"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - db-products
+    ports:
+      - 9101:9101
+    volumes:
+      - ./packages/services/product:/opt/ecommerce/product
+    environment:
+      GRPC_HOST: "0.0.0.0"
+      GRPC_PORT: 9101
+      DB_URI: "db-products:9102"
+
   db-products:
       container_name: db-products
       environment:
@@ -9,3 +37,5 @@ services:
     
       ports:
         - 9102:5432
+
+  
